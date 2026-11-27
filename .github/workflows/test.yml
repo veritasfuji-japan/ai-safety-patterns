@@ -14,3 +14,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python -m unittest -v
+  browser-models:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check demo/app.js
+      - run: node --test test_browser_models.cjs
