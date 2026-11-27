@@ -1,6 +1,6 @@
 # AI Safety Patterns
 
-<a href="https://github.com/veritasfuji-japan/veritas_os"><img src="demo/veritas-mark-192.png" width="44" height="44" alt="VERITAS OS"></a> · VERITAS OSの思想に基づく独立したオープンソース教材。
+<a href="https://veritas-website-navy.vercel.app/"><img src="demo/veritas-mark-192.png" width="44" height="44" alt="VERITAS OS"></a> · VERITAS OSの思想に基づく独立したオープンソース教材。
 
 ![One approval, 32 concurrent requests: forced race 32 grants; atomic in-memory consumption 1 grant, 31 denials](assets/social-preview.svg)
 
@@ -8,7 +8,7 @@
 
 **[▶ ブラウザで体験する（インストール不要）](https://veritasfuji-japan.github.io/ai-safety-patterns/)**
 
-[English](README.md) · [デモのソース](demo/index.html) · [VERITAS OS](https://github.com/veritasfuji-japan/veritas_os)
+[English](README.md) · [デモのソース](demo/index.html) · [VERITAS OS 公式サイト](https://veritas-website-navy.vercel.app/) · [VERITAS OS GitHub](https://github.com/veritasfuji-japan/veritas_os)
 
 AIエージェントの安全設計を、失敗例と改善例の比較で学ぶ教材です。APIキー・外部ライブラリ・外部操作は不要です。
 
