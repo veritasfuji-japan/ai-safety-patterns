@@ -5,6 +5,7 @@ from threading import Barrier
 from safety_patterns import (
     Operation, unsafe_bound, bound, RevocableReservation,
     unsafe_approval, human_approval, unsafe_outcome, outcome,
+    injection, replay, policy_drift, trust_boundary, effect_uncertainty,
 )
 
 
@@ -77,3 +78,79 @@ class SafetyPatternTests(unittest.TestCase):
         self.assertFalse(unsafe_approval(True, None))
         self.assertEqual(outcome("true", "matching"), "UNKNOWN")
         self.assertEqual(unsafe_outcome(True, "invalid"), "UNKNOWN")
+
+    def test_injection_cases(self):
+        for args, unsafe, improved in (
+            (("injected-command", False), "ALLOW", "DENY"),
+            (("ordinary-data", False), "DENY", "DENY"),
+            (("ordinary-data", True), "ALLOW", "ALLOW"),
+            (("injected-command", True), "ALLOW", "ALLOW"),
+        ):
+            with self.subTest(args=args):
+                self.assertEqual(injection(*args, False), unsafe)
+                self.assertEqual(injection(*args, True), improved)
+        for args in (("bad", True), ("injected-command", "true"), (None, True)):
+            for improved in (True, False):
+                self.assertEqual(injection(*args, improved), "DENY")
+        self.assertEqual(injection("injected-command", False, "true"), "DENY")
+
+    def test_replay_cases(self):
+        for args, unsafe, improved in (
+            ((True, True), "ALLOW", "DENY"),
+            ((True, False), "ALLOW", "ALLOW"),
+            ((False, False), "DENY", "DENY"),
+            ((False, True), "DENY", "DENY"),
+        ):
+            with self.subTest(args=args):
+                self.assertEqual(replay(*args, False), unsafe)
+                self.assertEqual(replay(*args, True), improved)
+        for args in (("true", False), (True, "false"), (None, False)):
+            for improved in (True, False):
+                self.assertEqual(replay(*args, improved), "DENY")
+        self.assertEqual(replay(True, True, "true"), "DENY")
+
+    def test_policy_drift_cases(self):
+        for args, unsafe, improved in (
+            (("v1", "v2", True), "ALLOW", "DENY"),
+            (("v1", "v1", True), "ALLOW", "ALLOW"),
+            (("v2", "v2", True), "ALLOW", "ALLOW"),
+            (("v1", "v1", False), "DENY", "DENY"),
+        ):
+            with self.subTest(args=args):
+                self.assertEqual(policy_drift(*args, False), unsafe)
+                self.assertEqual(policy_drift(*args, True), improved)
+        for args in (("", "v1", True), ("v1", "bad", True), ("v1", "v1", "true")):
+            for improved in (True, False):
+                self.assertEqual(policy_drift(*args, improved), "DENY")
+        self.assertEqual(policy_drift("v1", "v2", True, "true"), "DENY")
+
+    def test_trust_boundary_cases(self):
+        for args, unsafe, improved in (
+            ((True, False), "ALLOW", "DENY"),
+            ((True, True), "ALLOW", "ALLOW"),
+            ((False, True), "DENY", "DENY"),
+            ((False, False), "DENY", "DENY"),
+        ):
+            with self.subTest(args=args):
+                self.assertEqual(trust_boundary(*args, False), unsafe)
+                self.assertEqual(trust_boundary(*args, True), improved)
+        for args in (("true", True), (True, "true"), (True, None)):
+            for improved in (True, False):
+                self.assertEqual(trust_boundary(*args, improved), "DENY")
+        self.assertEqual(trust_boundary(True, False, "true"), "DENY")
+
+    def test_effect_uncertainty_cases(self):
+        for args, unsafe, improved in (
+            (("unknown", True), "RETRY", "HOLD"),
+            (("not-applied", True), "RETRY", "RETRY"),
+            (("applied", True), "STOP", "STOP"),
+            (("not-applied", False), "HOLD", "HOLD"),
+            (("unknown", False), "HOLD", "HOLD"),
+        ):
+            with self.subTest(args=args):
+                self.assertEqual(effect_uncertainty(*args, False), unsafe)
+                self.assertEqual(effect_uncertainty(*args, True), improved)
+        for args in (("bad", True), ("unknown", "true"), (None, True)):
+            for improved in (True, False):
+                self.assertEqual(effect_uncertainty(*args, improved), "HOLD")
+        self.assertEqual(effect_uncertainty("unknown", True, "true"), "HOLD")
