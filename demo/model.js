@@ -26,6 +26,27 @@ const SafetyModels = {
         !["matching", "missing", "mismatched"].includes(observation)) return "UNKNOWN";
     if (!improved) return report ? "CONFIRMED" : "UNKNOWN";
     return observation === "matching" ? "CONFIRMED" : "UNKNOWN";
+  },
+  injection(content, authorized, improved) {
+    if (!["injected-command","ordinary-data"].includes(content) || typeof authorized !== "boolean" || typeof improved !== "boolean") return "DENY";
+    return (authorized || (!improved && content === "injected-command")) ? "ALLOW" : "DENY";
+  },
+  replay(valid, consumed, improved) {
+    if ([valid,consumed,improved].some(v=>typeof v !== "boolean")) return "DENY";
+    return valid && (!improved || !consumed) ? "ALLOW" : "DENY";
+  },
+  policyDrift(approvedVersion, currentVersion, approved, improved) {
+    if (![approvedVersion,currentVersion].every(v=>["v1","v2"].includes(v)) || typeof approved !== "boolean" || typeof improved !== "boolean") return "DENY";
+    return approved && (!improved || approvedVersion === currentVersion) ? "ALLOW" : "DENY";
+  },
+  trustBoundary(signatureValid, trustedIssuer, improved) {
+    if ([signatureValid,trustedIssuer,improved].some(v=>typeof v !== "boolean")) return "DENY";
+    return signatureValid && (!improved || trustedIssuer) ? "ALLOW" : "DENY";
+  },
+  effectUncertainty(state, freshAuthorization, improved) {
+    if (!["unknown","applied","not-applied"].includes(state) || typeof freshAuthorization !== "boolean" || typeof improved !== "boolean") return "HOLD";
+    if (state === "applied") return "STOP";
+    return freshAuthorization && (!improved || state === "not-applied") ? "RETRY" : "HOLD";
   }
 };
 if (typeof module !== "undefined") module.exports = SafetyModels;

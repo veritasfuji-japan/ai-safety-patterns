@@ -14,7 +14,7 @@ One approval. One authority consumption.
 
 Learn how AI agent safety can fail — and how to test a concrete design improvement. No API keys, dependencies or external actions.
 
-## Five interactive safety labs
+## Ten interactive safety labs
 
 | Pattern | Failure explored | Python example |
 | --- | --- | --- |
@@ -23,6 +23,11 @@ Learn how AI agent safety can fail — and how to test a concrete design improve
 | 03 — [Revocation Race](https://veritasfuji-japan.github.io/ai-safety-patterns/#revocation-race) | Stale checks vs reservation ordering | [safety_patterns.py](safety_patterns.py) |
 | 04 — [Human Approval](https://veritasfuji-japan.github.io/ai-safety-patterns/#human-approval) | Recommendation mistaken for permission | [safety_patterns.py](safety_patterns.py) |
 | 05 — [Outcome Evidence](https://veritasfuji-japan.github.io/ai-safety-patterns/#outcome-evidence) | Self-report mistaken for confirmed effect | [safety_patterns.py](safety_patterns.py) |
+| 06 — [Prompt Injection](https://veritasfuji-japan.github.io/ai-safety-patterns/#prompt-injection) | Untrusted instruction treated as authority | [safety_patterns.py](safety_patterns.py) |
+| 07 — [Replay Attack](https://veritasfuji-japan.github.io/ai-safety-patterns/#replay-attack) | Sequential reuse of consumed authority | [safety_patterns.py](safety_patterns.py) |
+| 08 — [Policy Drift](https://veritasfuji-japan.github.io/ai-safety-patterns/#policy-drift) | Approval tied to an obsolete policy | [safety_patterns.py](safety_patterns.py) |
+| 09 — [Trust Boundary](https://veritasfuji-japan.github.io/ai-safety-patterns/#trust-boundary) | Valid signature from an untrusted issuer | [safety_patterns.py](safety_patterns.py) |
+| 10 — [Effect Uncertainty](https://veritasfuji-japan.github.io/ai-safety-patterns/#effect-uncertainty) | Unsafe retry after unknown external effect | [safety_patterns.py](safety_patterns.py) |
 
 Each lab compares an unsafe toy policy with a scoped improvement. Browser simulations are deterministic; Python examples test actual threads for patterns 01 and 03. See limitations in each lab.
 
@@ -67,7 +72,7 @@ Inspired by [VERITAS OS](https://github.com/veritasfuji-japan/veritas_os), which
 
 ## Contribute
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Patterns 01–05 are included. Contributions should add reproducible positive and negative cases and explicit limitations.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Patterns 01–10 are included. Contributions should add reproducible positive and negative cases and explicit limitations.
 
 ## License
 

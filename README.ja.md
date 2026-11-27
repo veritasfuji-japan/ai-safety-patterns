@@ -12,15 +12,20 @@
 
 AIエージェントの安全設計を、失敗例と改善例の比較で学ぶ教材です。APIキー・外部ライブラリ・外部操作は不要です。
 
-## 5つの体験型教材
+## 10の体験型教材
 
 | パターン | 学ぶ問題 | Python実装 |
 | --- | --- | --- |
-| 01 — [実行権限の単回消費](https://veritasfuji-japan.github.io/ai-safety-patterns/single-use.html) | 重複許可 | [authority.py](authority.py) |
+| 01 — [実行権限の単回消費](https://veritasfuji-japan.github.io/ai-safety-patterns/single-use.html?lang=ja) | 重複許可 | [authority.py](authority.py) |
 | 02 — [実行対象の紐付け](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#bound-authority) | 実行者・操作・対象・金額の置換 | [safety_patterns.py](safety_patterns.py) |
 | 03 — [取消しと送信許可の競合](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#revocation-race) | 古い確認と予約確定の順序 | [safety_patterns.py](safety_patterns.py) |
 | 04 — [人間による承認](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#human-approval) | 推奨と許可の混同 | [safety_patterns.py](safety_patterns.py) |
 | 05 — [実行結果の証拠](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#outcome-evidence) | 自己報告と確認済み結果の混同 | [safety_patterns.py](safety_patterns.py) |
+| 06 — [プロンプトインジェクション](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#prompt-injection) | 信頼できない指示を権限と誤認 | [safety_patterns.py](safety_patterns.py) |
+| 07 — [リプレイ攻撃](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#replay-attack) | 消費済み権限の逐次再利用 | [safety_patterns.py](safety_patterns.py) |
+| 08 — [ポリシー変更](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#policy-drift) | 古いポリシーに基づく承認 | [safety_patterns.py](safety_patterns.py) |
+| 09 — [信頼境界](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#trust-boundary) | 未信頼の発行元による有効な署名 | [safety_patterns.py](safety_patterns.py) |
+| 10 — [外部処理の結果不明](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#effect-uncertainty) | 外部処理の結果不明後の危険な再試行 | [safety_patterns.py](safety_patterns.py) |
 
 ブラウザは決定論的シミュレーションです。Pythonでは01と03に実スレッドによるテストを含めます。各教材に保証範囲の限界を記載しています。
 
@@ -54,7 +59,7 @@ node --test test_browser_models.cjs
 
 ## VERITASとの関係
 
-[VERITAS OS](https://github.com/veritasfuji-japan/veritas_os) の思想に基づく独立教材です。本体の認証や検証結果を示すものではありません。パターン01〜05を収録しています。
+[VERITAS OS](https://github.com/veritasfuji-japan/veritas_os) の思想に基づく独立教材です。本体の認証や検証結果を示すものではありません。パターン01〜10を収録しています。
 
 ## ライセンス
 

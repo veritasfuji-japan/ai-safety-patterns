@@ -56,12 +56,19 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                 page.wait_for_function("document.querySelector('.veritas-brand img').complete && document.querySelector('.veritas-brand img').naturalWidth === 192 && document.querySelector('.veritas-brand img').naturalHeight === 192")
                 expect(page.locator('link[rel="icon"]')).to_have_attribute("href", "veritas-mark.png")
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-                expect(page.locator(".tile")).to_have_count(5)
+                expect(page.locator(".tile")).to_have_count(10)
+                expect(page.locator(".tile-icon")).to_have_count(10)
+                assert page.locator(".catalog").evaluate("(el)=>getComputedStyle(el).gridTemplateColumns.split(' ').length") == (2 if width == 390 else 3)
                 for slug, cases in (
                     ("bound-authority", [("ALLOW","ALLOW")] + [("ALLOW","DENY")]*4),
                     ("revocation-race", [("ALLOW","DENY"),("ALLOW","ALLOW")]),
                     ("human-approval", [("ALLOW","DENY"),("ALLOW","ALLOW"),("DENY","DENY"),("ALLOW","ALLOW")]),
                     ("outcome-evidence", [("CONFIRMED","UNKNOWN"),("CONFIRMED","CONFIRMED"),("CONFIRMED","UNKNOWN"),("UNKNOWN","UNKNOWN"),("UNKNOWN","CONFIRMED")]),
+                    ("prompt-injection", [("ALLOW","DENY"),("DENY","DENY"),("ALLOW","ALLOW"),("ALLOW","ALLOW")]),
+                    ("replay-attack", [("ALLOW","DENY"),("ALLOW","ALLOW"),("DENY","DENY"),("DENY","DENY")]),
+                    ("policy-drift", [("ALLOW","DENY"),("ALLOW","ALLOW"),("ALLOW","ALLOW"),("DENY","DENY")]),
+                    ("trust-boundary", [("ALLOW","DENY"),("ALLOW","ALLOW"),("DENY","DENY"),("DENY","DENY")]),
+                    ("effect-uncertainty", [("RETRY ELIGIBLE","HOLD"),("RETRY ELIGIBLE","RETRY ELIGIBLE"),("STOP","STOP"),("HOLD","HOLD"),("HOLD","HOLD")]),
                 ):
                     page.locator(f'a[href="#{slug}"]').click()
                     expect(page.locator("#lab")).to_be_visible()
@@ -70,9 +77,9 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                         page.locator("#run").click()
                         expect(page.locator("#bad-result")).to_have_text(bad)
                         expect(page.locator("#good-result")).to_have_text(good)
-                        if bad != good and bad in ("ALLOW", "CONFIRMED"):
+                        if bad != good and bad in ("ALLOW", "CONFIRMED", "RETRY ELIGIBLE"):
                             expect(page.locator("#bad-result")).to_have_css("color", "rgb(161, 38, 55)")
-                        if good == "UNKNOWN":
+                        if good in ("UNKNOWN", "HOLD"):
                             expect(page.locator("#good-result")).to_have_css("color", "rgb(85, 89, 96)")
                         if slug == "bound-authority":
                             expect(page.locator(".diff-table .changed")).to_have_count(int(i != 0))
@@ -80,6 +87,18 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                             assert "risk" not in page.locator("#bad-result").get_attribute("class")
                     page.locator("#reset").click()
                     expect(page.locator("#bad-result")).to_have_text("—")
+                for slug, title, expected in (
+                    ("prompt-injection", "プロンプトインジェクション", "拒否"),
+                    ("replay-attack", "リプレイ攻撃", "拒否"),
+                    ("policy-drift", "ポリシー変更", "拒否"),
+                    ("trust-boundary", "信頼境界", "拒否"),
+                    ("effect-uncertainty", "外部処理の結果不明", "保留"),
+                ):
+                    page.goto(url + "?lang=ja#" + slug)
+                    expect(page.locator("#lab-title")).to_have_text(title)
+                    page.locator("#run").click()
+                    expect(page.locator("#good-result")).to_have_text(expected)
+                    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                 page.goto(url + "?lang=ja#bound-authority")
                 check_website_links(page)
                 expect(page.locator("#lab-title")).to_have_text("実行対象の紐付け")
