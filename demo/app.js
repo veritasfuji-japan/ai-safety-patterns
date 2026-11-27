@@ -12,7 +12,7 @@ const lessons=[
 ];
 let lang=new URLSearchParams(location.search).get("lang")==="ja"?"ja":"en",current=null,selected=0,ran=false;
 const slugs={"02":"bound-authority","03":"revocation-race","04":"human-approval","05":"outcome-evidence"};
-const fields=["actor","action","target","amount"];
+const bindingFields=["actor","action","target","amount"];
 function bindingScenario(i) {
   const approved={actor:"agent-a",action:"transfer",target:"account-a",amount:100};
   const requested={...approved};
@@ -32,7 +32,7 @@ function renderDetails(){
     const th=document.createElement("th");th.scope="col";th.textContent=name;header.append(th);
   }
   const body=table.createTBody();
-  for(const k of fields){
+  for(const k of bindingFields){
     const row=body.insertRow();const changed=approved[k]!==requested[k];
     const th=document.createElement("th");th.scope="row";th.textContent=k;row.append(th);
     row.insertCell().textContent=String(approved[k]);
