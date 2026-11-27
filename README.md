@@ -1,6 +1,6 @@
 # AI Safety Patterns
 
-<a href="https://github.com/veritasfuji-japan/veritas_os"><img src="demo/veritas-mark.png" width="44" height="44" alt="VERITAS OS"></a> · An independent open-source learning project inspired by VERITAS OS.
+<a href="https://github.com/veritasfuji-japan/veritas_os"><img src="demo/veritas-mark-192.png" width="44" height="44" alt="VERITAS OS"></a> · An independent open-source learning project inspired by VERITAS OS.
 
 ![One approval, 32 concurrent requests: forced race 32 grants; atomic in-memory consumption 1 grant, 31 denials](assets/social-preview.svg)
 
