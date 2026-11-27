@@ -15,10 +15,10 @@ AIエージェントの安全設計を、失敗例と改善例の比較で学ぶ
 | パターン | 学ぶ問題 | Python実装 |
 | --- | --- | --- |
 | 01 — [実行権限の単回消費](https://veritasfuji-japan.github.io/ai-safety-patterns/single-use.html) | 重複許可 | [authority.py](authority.py) |
-| 02 — 実行対象の紐付け | 実行者・操作・対象・金額の置換 | [safety_patterns.py](safety_patterns.py) |
-| 03 — 取消しと送信許可の競合 | 古い確認と予約確定の順序 | [safety_patterns.py](safety_patterns.py) |
-| 04 — 人間による承認 | 推奨と許可の混同 | [safety_patterns.py](safety_patterns.py) |
-| 05 — 実行結果の証拠 | 自己報告と確認済み結果の混同 | [safety_patterns.py](safety_patterns.py) |
+| 02 — [実行対象の紐付け](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#bound-authority) | 実行者・操作・対象・金額の置換 | [safety_patterns.py](safety_patterns.py) |
+| 03 — [取消しと送信許可の競合](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#revocation-race) | 古い確認と予約確定の順序 | [safety_patterns.py](safety_patterns.py) |
+| 04 — [人間による承認](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#human-approval) | 推奨と許可の混同 | [safety_patterns.py](safety_patterns.py) |
+| 05 — [実行結果の証拠](https://veritasfuji-japan.github.io/ai-safety-patterns/?lang=ja#outcome-evidence) | 自己報告と確認済み結果の混同 | [safety_patterns.py](safety_patterns.py) |
 
 ブラウザは決定論的シミュレーションです。Pythonでは01と03に実スレッドによるテストを含めます。各教材に保証範囲の限界を記載しています。
 

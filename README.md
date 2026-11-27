@@ -17,10 +17,10 @@ Learn how AI agent safety can fail — and how to test a concrete design improve
 | Pattern | Failure explored | Python example |
 | --- | --- | --- |
 | 01 — [Single-Use Authority](https://veritasfuji-japan.github.io/ai-safety-patterns/single-use.html) | Duplicate grants | [authority.py](authority.py) |
-| 02 — Bound Authority | Actor, action, target or amount substitution | [safety_patterns.py](safety_patterns.py) |
-| 03 — Revocation Race | Stale checks vs reservation ordering | [safety_patterns.py](safety_patterns.py) |
-| 04 — Human Approval | Recommendation mistaken for permission | [safety_patterns.py](safety_patterns.py) |
-| 05 — Outcome Evidence | Self-report mistaken for confirmed effect | [safety_patterns.py](safety_patterns.py) |
+| 02 — [Bound Authority](https://veritasfuji-japan.github.io/ai-safety-patterns/#bound-authority) | Actor, action, target or amount substitution | [safety_patterns.py](safety_patterns.py) |
+| 03 — [Revocation Race](https://veritasfuji-japan.github.io/ai-safety-patterns/#revocation-race) | Stale checks vs reservation ordering | [safety_patterns.py](safety_patterns.py) |
+| 04 — [Human Approval](https://veritasfuji-japan.github.io/ai-safety-patterns/#human-approval) | Recommendation mistaken for permission | [safety_patterns.py](safety_patterns.py) |
+| 05 — [Outcome Evidence](https://veritasfuji-japan.github.io/ai-safety-patterns/#outcome-evidence) | Self-report mistaken for confirmed effect | [safety_patterns.py](safety_patterns.py) |
 
 Each lab compares an unsafe toy policy with a scoped improvement. Browser simulations are deterministic; Python examples test actual threads for patterns 01 and 03. See limitations in each lab.
 

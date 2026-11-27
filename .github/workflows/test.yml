@@ -23,3 +23,14 @@ jobs:
           node-version: '22'
       - run: node --check demo/app.js
       - run: node --test test_browser_models.cjs
+  browser-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.56.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python browser_ui_check.py

@@ -27,3 +27,21 @@ test("unknown is not confirmed", () => {
   assert.equal(m.outcome(true,"matching",true),"CONFIRMED");
   assert.equal(m.outcome(false,"missing",true),"UNKNOWN");
 });
+
+test("malformed inputs fail closed", () => {
+  const a = {actor:"a",action:"transfer",target:"x",amount:100};
+  for(const invalid of [null,undefined,{}, {...a, amount:true}, {...a, amount:0}, {...a,amount:2**53}, {...a,target:""}]) {
+    for(const improved of [true,false]) {
+      assert.equal(m.bound(invalid,a,improved),"DENY");
+      assert.equal(m.bound(a,invalid,improved),"DENY");
+    }
+  }
+  for(const order of [null,undefined,"typo","",{},1]) {
+    for(const improved of [true,false]) assert.equal(m.revocation(order,improved),"DENY");
+  }
+  assert.equal(m.approval(true,"false",true),"DENY");
+  assert.equal(m.approval(true,null,false),"DENY");
+  assert.equal(m.outcome("true","matching",true),"UNKNOWN");
+  assert.equal(m.outcome(true,"invalid",false),"UNKNOWN");
+  assert.equal(m.bound(a,a,undefined),"DENY");
+});

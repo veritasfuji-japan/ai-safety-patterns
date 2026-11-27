@@ -11,12 +11,20 @@ class Operation:
     amount: int
 
 
+def valid_operation(op):
+    return (type(op) is Operation
+            and all(type(v) is str and len(v) > 0
+                    for v in (op.actor, op.action, op.target))
+            and type(op.amount) is int
+            and 0 < op.amount <= 2**53 - 1)
+
+
 def unsafe_bound(approved, requested):
-    return approved is not None
+    return valid_operation(approved) and valid_operation(requested)
 
 
 def bound(approved, requested):
-    return approved is not None and approved == requested
+    return unsafe_bound(approved, requested) and approved == requested
 
 
 class RevocableReservation:
@@ -41,17 +49,17 @@ class RevocableReservation:
 
 
 def unsafe_approval(recommended, approved):
-    return recommended or approved
+    return type(recommended) is bool and type(approved) is bool and (recommended or approved)
 
 
 def human_approval(recommended, approved):
-    return approved
+    return type(recommended) is bool and type(approved) is bool and approved
 
 
 def unsafe_outcome(report, observation):
-    return "CONFIRMED" if report else "UNKNOWN"
+    return "CONFIRMED" if type(report) is bool and report and observation in ("matching", "missing", "mismatched") else "UNKNOWN"
 
 
 def outcome(report, observation):
     # Assumes an independently authenticated and matching observation.
-    return "CONFIRMED" if observation == "matching" else "UNKNOWN"
+    return "CONFIRMED" if type(report) is bool and observation == "matching" else "UNKNOWN"

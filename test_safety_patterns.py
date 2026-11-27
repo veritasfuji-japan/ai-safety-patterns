@@ -63,3 +63,17 @@ class SafetyPatternTests(unittest.TestCase):
         self.assertEqual(outcome(True, "matching"), "CONFIRMED")
         self.assertEqual(outcome(False, "missing"), "UNKNOWN")
         self.assertEqual(outcome(False, "matching"), "CONFIRMED")
+
+    def test_malformed_inputs(self):
+        op = Operation("agent-a", "transfer", "account-a", 100)
+        for invalid in (None, {}, replace(op, amount=True),
+                        replace(op, amount=0), replace(op, amount=2**53),
+                        replace(op, target="")):
+            with self.subTest(invalid=invalid):
+                self.assertFalse(bound(invalid, op))
+                self.assertFalse(bound(op, invalid))
+                self.assertFalse(unsafe_bound(invalid, op))
+        self.assertFalse(human_approval(True, "false"))
+        self.assertFalse(unsafe_approval(True, None))
+        self.assertEqual(outcome("true", "matching"), "UNKNOWN")
+        self.assertEqual(unsafe_outcome(True, "invalid"), "UNKNOWN")
