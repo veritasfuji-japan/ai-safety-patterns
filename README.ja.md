@@ -1,5 +1,7 @@
 # AI Safety Patterns
 
+<a href="https://github.com/veritasfuji-japan/veritas_os"><img src="demo/veritas-mark.png" width="44" height="44" alt="VERITAS OS"></a> · VERITAS OSの思想に基づく独立したオープンソース教材。
+
 ![One approval, 32 concurrent requests: forced race 32 grants; atomic in-memory consumption 1 grant, 31 denials](assets/social-preview.svg)
 
 **1回の承認。1回の権限消費。**

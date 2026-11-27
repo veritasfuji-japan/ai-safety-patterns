@@ -1,0 +1,10 @@
+/* Shared brand treatment. The mark is cropped and resized from the owner-supplied logo. */
+.veritas-brand{display:inline-flex;align-items:center;gap:10px;min-width:0;color:#edf3fa;text-decoration:none}
+.veritas-brand img{display:block;width:44px;height:44px;flex:0 0 44px;object-fit:contain}
+.veritas-brand span{min-width:0;line-height:1.25}
+.veritas-brand strong{display:block;font-size:16px;letter-spacing:.02em}
+.veritas-brand small,.brand-context{display:block;font-size:10px;font-weight:600;letter-spacing:.09em;color:#a9bbce}
+.veritas-brand:focus-visible{outline:3px solid #83d6ff;outline-offset:4px;border-radius:4px}
+header #lang{flex-shrink:0}
+.brand-context{margin:24px 0 0}
+@media(max-width:360px){.veritas-brand{gap:6px}.veritas-brand img{width:36px;height:36px;flex-basis:36px}.veritas-brand small{font-size:9px}}
