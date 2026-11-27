@@ -4,6 +4,8 @@
 
 **1回の承認。1回の権限消費。**
 
+**[▶ ブラウザで体験する（インストール不要）](https://veritasfuji-japan.github.io/ai-safety-patterns/)**
+
 [English](README.md) · [デモのソース](demo/index.html) · [VERITAS OS](https://github.com/veritasfuji-japan/veritas_os)
 
 AIエージェントの安全設計を、失敗例と改善例の比較で学ぶ教材です。APIキー・外部ライブラリ・外部操作は不要です。
