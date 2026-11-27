@@ -1,0 +1,19 @@
+/* Paper palette sampled from the owner-supplied VERITAS website screenshots.
+   Semantic result colors are intentionally distinct from brand accents. */
+:root {
+  color-scheme: light;
+  --bg: #f3efe4;
+  --surface: #f9f6ec;
+  --panel: #ede9da;
+  --ink: #151619;
+  --muted: #555960;
+  --border: #c4beaf;
+  --control-border: #817c70;
+  --teal: #0b736f;
+  --blue: #2549b9;
+  --accent-shadow: #43b3a9;
+  --risk: #a12637;
+  --protected: #176b50;
+  --unknown: #555960;
+  --on-solid: #f9f6ec;
+}
