@@ -6,6 +6,8 @@
 
 One approval. One authority consumption.
 
+**[▶ Try the live demo — no installation required](https://veritasfuji-japan.github.io/ai-safety-patterns/)**
+
 [日本語](README.ja.md) · [Browser demo source](demo/index.html) · [VERITAS OS](https://github.com/veritasfuji-japan/veritas_os)
 
 Learn how AI agent safety can fail — and how to test a concrete design improvement. No API keys, dependencies or external actions.
