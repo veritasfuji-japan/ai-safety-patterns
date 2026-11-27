@@ -18,6 +18,11 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                 errors = []
                 page.on("pageerror", lambda err: errors.append(str(err)))
                 page.goto(url)
+                expect(page.locator(".veritas-brand")).to_have_attribute("href", "https://github.com/veritasfuji-japan/veritas_os")
+                expect(page.locator(".veritas-brand img")).to_be_visible()
+                page.wait_for_function("document.querySelector('.veritas-brand img').complete && document.querySelector('.veritas-brand img').naturalWidth > 0")
+                expect(page.locator('link[rel="icon"]')).to_have_attribute("href", "veritas-mark.png")
+                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                 expect(page.locator(".tile")).to_have_count(5)
                 for slug, cases in (
                     ("bound-authority", [("ALLOW","ALLOW")] + [("ALLOW","DENY")]*4),
@@ -48,6 +53,11 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                 page.goto(url + "?lang=ja")
                 page.locator('a[href="single-use.html?lang=ja"]').click()
+                expect(page.locator(".veritas-brand")).to_have_attribute("href", "https://github.com/veritasfuji-japan/veritas_os")
+                expect(page.locator(".veritas-brand img")).to_be_visible()
+                page.wait_for_function("document.querySelector('.veritas-brand img').complete && document.querySelector('.veritas-brand img').naturalWidth > 0")
+                expect(page.locator('link[rel="icon"]')).to_have_attribute("href", "veritas-mark.png")
+                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                 expect(page.locator("html")).to_have_attribute("lang","ja")
                 for n in (2,8,32,64):
                     page.locator("#n").select_option(str(n))
