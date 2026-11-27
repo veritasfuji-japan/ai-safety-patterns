@@ -5,6 +5,17 @@ from pathlib import Path
 from threading import Thread
 from playwright.sync_api import sync_playwright, expect
 
+def check_website_links(page):
+    expect(page.locator(".veritas-brand")).to_have_attribute("href", "https://veritas-website-navy.vercel.app/")
+    links = page.locator("[data-site-link]")
+    expect(links).to_have_count(2 if page.locator("#catalog").count() else 1)
+    for link in links.all():
+        expect(link).to_be_visible()
+        expect(link).to_have_attribute("href", "https://veritas-website-navy.vercel.app/")
+        expect(link).to_have_text("VERITAS OS 公式サイト ↗" if page.locator("html").get_attribute("lang") == "ja" else "VERITAS OS Website ↗")
+    expect(page.locator('a[href="https://github.com/veritasfuji-japan/veritas_os"]').first).to_be_visible()
+
+
 def check_paper_theme(page, primary):
     expect(page.locator("body")).to_have_css("background-color", "rgb(243, 239, 228)")
     expect(page.locator("body")).to_have_css("color", "rgb(21, 22, 25)")
@@ -40,7 +51,7 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                 page.on("pageerror", lambda err: errors.append(str(err)))
                 page.goto(url)
                 check_paper_theme(page, "#run")
-                expect(page.locator(".veritas-brand")).to_have_attribute("href", "https://github.com/veritasfuji-japan/veritas_os")
+                check_website_links(page)
                 expect(page.locator(".veritas-brand img")).to_be_visible()
                 page.wait_for_function("document.querySelector('.veritas-brand img').complete && document.querySelector('.veritas-brand img').naturalWidth === 192 && document.querySelector('.veritas-brand img').naturalHeight === 192")
                 expect(page.locator('link[rel="icon"]')).to_have_attribute("href", "veritas-mark.png")
@@ -70,17 +81,19 @@ with ThreadingHTTPServer(("127.0.0.1", 0), partial(SimpleHTTPRequestHandler, dir
                     page.locator("#reset").click()
                     expect(page.locator("#bad-result")).to_have_text("—")
                 page.goto(url + "?lang=ja#bound-authority")
+                check_website_links(page)
                 expect(page.locator("#lab-title")).to_have_text("実行対象の紐付け")
                 page.locator("#choice").select_option("2")
                 page.locator("#run").click()
                 expect(page.locator("#good-result")).to_have_text("拒否")
                 page.locator("#lang").click()
                 expect(page.locator("#good-result")).to_have_text("DENY")
+                check_website_links(page)
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                 page.goto(url + "?lang=ja")
                 page.locator('a[href="single-use.html?lang=ja"]').click()
                 check_paper_theme(page, "#run")
-                expect(page.locator(".veritas-brand")).to_have_attribute("href", "https://github.com/veritasfuji-japan/veritas_os")
+                check_website_links(page)
                 expect(page.locator(".veritas-brand img")).to_be_visible()
                 page.wait_for_function("document.querySelector('.veritas-brand img').complete && document.querySelector('.veritas-brand img').naturalWidth === 192 && document.querySelector('.veritas-brand img').naturalHeight === 192")
                 expect(page.locator('link[rel="icon"]')).to_have_attribute("href", "veritas-mark.png")

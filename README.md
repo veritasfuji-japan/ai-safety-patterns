@@ -1,6 +1,6 @@
 # AI Safety Patterns
 
-<a href="https://github.com/veritasfuji-japan/veritas_os"><img src="demo/veritas-mark-192.png" width="44" height="44" alt="VERITAS OS"></a> · An independent open-source learning project inspired by VERITAS OS.
+<a href="https://veritas-website-navy.vercel.app/"><img src="demo/veritas-mark-192.png" width="44" height="44" alt="VERITAS OS"></a> · An independent open-source learning project inspired by VERITAS OS.
 
 ![One approval, 32 concurrent requests: forced race 32 grants; atomic in-memory consumption 1 grant, 31 denials](assets/social-preview.svg)
 
@@ -10,7 +10,7 @@ One approval. One authority consumption.
 
 **[▶ Try the live demo — no installation required](https://veritasfuji-japan.github.io/ai-safety-patterns/)**
 
-[日本語](README.ja.md) · [Browser demo source](demo/index.html) · [VERITAS OS](https://github.com/veritasfuji-japan/veritas_os)
+[日本語](README.ja.md) · [Browser demo source](demo/index.html) · [VERITAS OS Website](https://veritas-website-navy.vercel.app/) · [VERITAS OS GitHub](https://github.com/veritasfuji-japan/veritas_os)
 
 Learn how AI agent safety can fail — and how to test a concrete design improvement. No API keys, dependencies or external actions.
 
